@@ -3,18 +3,15 @@ package com.example.product.service;
 import com.example.product.errorHandling.ResourceNotFoundException;
 import com.example.product.model.*;
 import com.example.product.repository.*;
-import jakarta.persistence.EntityGraph;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Attr;
 
 import java.util.List;
 
 @Service
 public class ProductService {
-
 
     @Autowired
     private IProductRepo productRepo;
@@ -78,18 +75,54 @@ public class ProductService {
             Rating savedRating = ratingRepo.save(newRating);
             System.out.println("Saved Rating: " + savedRating);
         }
-
-        // Return the saved product with all associations
         return savedProduct;
     }
 
 
-    public Product getProductById ( int productId){
-            return productRepo.findById(productId).orElse(null);
+    public Product getProductById(int productId) {
+        Product newProduct = new Product();
+
+        Product product = productRepo.findById(productId).orElse(null);
+        newProduct.setProductId(product.getProductId());
+
+        List<Attribute> attributes = product.getAttributes();
+        for(Attribute attribute : attributes) {
+            attribute.setProduct(newProduct);
         }
+        List<Category> categories = product.getCategories();
+        for(Category category : categories) {
+            category.setProduct(newProduct);
+        }
+        List<Rating> ratings = product.getRating();
+        for(Rating rating : ratings) {
+            rating.setProduct(newProduct);
+        }
+        product.getAvailability().setProduct(newProduct);
+
+        return product;
+    }
 
     public List<Product> getAllProduct() {
-        return productRepo.findAll();
+        Product newProduct = new Product();
+        List<Product> products = productRepo.findAll();
+        for(Product product : products) {
+            newProduct.setProductId(product.getProductId());
+            List<Attribute> attributes = product.getAttributes();
+            for(Attribute attribute : attributes) {
+                attribute.setProduct(newProduct);
+            }
+            List<Category> categories = product.getCategories();
+            for(Category category : categories) {
+                category.setProduct(newProduct);
+            }
+            List<Rating> ratings = product.getRating();
+            for(Rating rating : ratings) {
+                rating.setProduct(newProduct);
+            }
+
+            product.getAvailability().setProduct(newProduct);
+        }
+        return products;
     }
 
     public Product updateProduct(Product product) {
@@ -103,10 +136,8 @@ public class ProductService {
         productRepo.deleteById(productId);
         return true;
     }
-
-
-
 }
+
 
 
 
