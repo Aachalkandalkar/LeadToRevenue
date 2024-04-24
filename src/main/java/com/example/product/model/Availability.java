@@ -23,7 +23,6 @@ public class Availability {
     private int quantity;
 
     @JoinColumn(name = "product_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToOne
     private Product product;
 }

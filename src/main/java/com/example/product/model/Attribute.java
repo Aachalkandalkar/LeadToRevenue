@@ -24,8 +24,7 @@ public class Attribute {
     private String value;
 
     @JoinColumn(name = "product_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
     private Product product;
 
 }

@@ -30,8 +30,7 @@ public class Rating {
     private String comment;
 
     @JoinColumn(name = "product_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
     private Product product;
 
 
