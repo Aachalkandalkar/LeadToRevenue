@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -22,6 +23,7 @@ public class ProductController {
     @PostMapping("/create")
     public ResponseEntity<Product> createProduct(@RequestBody Product product){
         Product createProduct =  productService.createProduct(product);
+//        System.out.println(product);
         return new ResponseEntity<>(createProduct, HttpStatus.CREATED);
     }
 
@@ -67,6 +69,9 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    //get all products
+
 
 
 

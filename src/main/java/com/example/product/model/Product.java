@@ -1,5 +1,6 @@
 package com.example.product.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,16 +29,20 @@ public class Product {
     @NotNull
     private double price;
 
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Category> categories = new ArrayList<>() ;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Attribute> attributes = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product",fetch = FetchType.LAZY)
+    @JsonIgnore
     private Availability availability;
 
-    @OneToMany
-    private List<Ratings> rating = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product",fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Rating> rating = new ArrayList<>();
 
 }

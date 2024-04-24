@@ -1,7 +1,6 @@
 package com.example.product.controller;
 
-import com.example.product.model.Availability;
-import com.example.product.model.Ratings;
+import com.example.product.model.Rating;
 import com.example.product.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +17,8 @@ public class RatingsController {
     @Autowired RatingService ratingService;
 
     @PostMapping("/create")
-    public ResponseEntity<Ratings> createRatings(@RequestBody Ratings ratings){
-        Ratings createRatings = ratingService.createRatings(ratings);
-        return new ResponseEntity<>(createRatings, HttpStatus.CREATED);
+    public ResponseEntity<Rating> createRatings(@RequestBody Rating rating){
+        Rating createRating = ratingService.createRatings(rating);
+        return new ResponseEntity<>(createRating, HttpStatus.CREATED);
     }
 }

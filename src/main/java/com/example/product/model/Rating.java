@@ -1,5 +1,6 @@
 package com.example.product.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Ratings {
+public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ratingId;
@@ -28,7 +29,10 @@ public class Ratings {
     @Size(max=255 , message = "comment length should be less than 255 or equal to 255")
     private String comment;
 
-    @OneToOne
+    @JoinColumn(name = "product_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Product product;
+
 
 }

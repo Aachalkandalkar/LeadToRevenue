@@ -1,5 +1,6 @@
 package com.example.product.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,8 @@ public class Availability {
     @NotNull
     private int quantity;
 
-    @OneToOne
+    @JoinColumn(name = "product_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Product product;
 }
